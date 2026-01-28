@@ -1,6 +1,4 @@
-# Automated Strong-Motion Record Processing via Deep Learning–Based Simultaneous P-Wave Identification and High-Pass Corner Frequency Selection
-
-**Italo Inocente, Yoshihisa Maruyama**
+# Automated Strong-Motion Processing: P-wave Picking and f<sub>cHP</sub> Selection
 
 Repository with scripts and code for strong-motion record processing, dataset generation, model training, and inference.
 
