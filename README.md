@@ -2,6 +2,8 @@
 
 Repository with scripts and code for strong-motion record processing, dataset generation, model training, and inference.
 
+> **Note:** This section will be updated soon (setup instructions, dependency files, and usage examples are in progress).
+
 ## Repository structure
 - `core/` : core processing logic and utilities
 - `src/` : model code (datasets, architectures, training, inference)

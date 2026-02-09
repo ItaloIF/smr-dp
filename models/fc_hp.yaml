@@ -1,0 +1,34 @@
+PROJECT:
+  TYPE: fc_hp
+  VERSION: 1.0
+
+SEED: 62
+DEVICE: cuda 
+
+DATA:
+  DF: data/gmr_ml_jp_dataset_v2.csv
+  DIR: data/jp_dataset_2D
+  NUM_WORKERS: 0
+  DATASET_TYPE: GMRecords2DDataset
+  SPLIT_TYPE: files
+  DF_TRAIN: data/train_df.csv
+  DF_VAL: data/val_df.csv
+  SPLIT_RATIO: 0.7
+
+MODEL:
+  NAME: HP_DeepLabV3Plus
+  TYPE: HP_DeepLabV3Plus
+
+TRAINING:
+  LEARNING_RATE: 0.0001
+  BATCH_SIZE: 16
+  NUM_EPOCHS: 100
+  LOSS: WeightedMSELoss
+  OPTIMIZER: Adam 
+  MASK_SMOOTH_SIGMA: 5
+
+TESTING:
+  DF: data/jp_dataset_2026_out.csv
+  DIR: data/jp_dataset_2D
+  BATCH_SIZE: 8
+  MASK_SMOOTH_SIGMA: 5
