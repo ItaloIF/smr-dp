@@ -174,19 +174,3 @@ Dataset citation:
 ```
 
 GitHub-compatible citation metadata is also provided in [CITATION.cff](CITATION.cff).
-
-## Reproducibility Notes
-
-- Use `make core` after cloning or changing `core/lib_pro.f90`.
-- Use `make check` for a lightweight syntax check.
-- Keep large raw datasets outside Git and document their paths through local
-  environment variables or config files.
-- The repository currently does not declare an open-source software license.
-  Until a license is added, reuse beyond citation/reference should be confirmed
-  with the authors.
-
-## Project Status
-
-This is a research companion repository. The inference/demo path is the most
-polished path; training and full-dataset reproduction should be documented as
-additional metadata, scripts, and dataset access information become available.
