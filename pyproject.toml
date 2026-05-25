@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smr-dp"
+version = "0.1.0"
+description = "Automated strong-motion record processing with joint P-wave and high-pass corner-frequency localization."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Italo Inocente" },
+  { name = "Yoshihisa Maruyama" },
+]
+keywords = [
+  "strong-motion",
+  "seismology",
+  "ground-motion-processing",
+  "deep-learning",
+  "p-wave-picking",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "pandas>=2.0",
+  "matplotlib>=3.8",
+  "obspy>=1.4",
+  "torch>=2.2",
+  "torchvision>=0.17",
+  "segmentation-models-pytorch>=0.3",
+  "timm>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/ItaloIF/smr-dp"
+Repository = "https://github.com/ItaloIF/smr-dp"
+Paper = "https://doi.org/10.1785/0320260007"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

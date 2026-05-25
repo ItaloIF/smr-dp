@@ -1,0 +1,37 @@
+__pycache__/
+*.py[cod]
+*.pyo
+
+.venv/
+venv/
+env/
+.env
+.env.*
+
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+build/
+dist/
+*.egg-info/
+
+core/*.so
+outputs/
+runs/
+tmp/
+*.log
+
+# Keep the bundled demo assets, but avoid accidentally committing full datasets.
+data/*
+!data/README.md
+!data/20260106101800s.pickle
+
+# Keep the published demo checkpoint, but avoid committing extra experiments.
+models/*
+!models/README.md
+!models/HP_DeepLabV3Plus/
+!models/HP_DeepLabV3Plus/best_model.pt
+
+# Generated local variants can live here without polluting Git.
+img/generated/

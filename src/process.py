@@ -1,8 +1,18 @@
 import numpy as np
 from scipy import signal
 from ctypes import *
+from pathlib import Path
 
-lib = CDLL('core/processing.so')
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+LIB_PATH = PROJECT_ROOT / "core" / "processing.so"
+
+try:
+    lib = CDLL(str(LIB_PATH))
+except OSError as exc:
+    raise OSError(
+        f"Could not load {LIB_PATH}. Compile it with `make core` or "
+        "`gfortran -shared -fPIC -o core/processing.so core/lib_pro.f90`."
+    ) from exc
 
 def integrate_linear_acceleration(data, dt):
     n = len(data)
@@ -90,6 +100,8 @@ def zero_padding(data, dt):
         nt = 2**23
     elif dt == 0.0005:
         nt = 2**24
+    else:
+        raise ValueError(f"Unsupported sampling interval dt={dt}.")
 
     new_data = np.concatenate((data, np.zeros(nt - n_org)))
 

@@ -1,8 +1,18 @@
-from .process import process_record_peer
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-import os
 import numpy as np
+
+from .process import (
+    cosine_taper,
+    fourier_spectrum,
+    gh,
+    gl,
+    integrate_linear_acceleration,
+    process_record_peer,
+    zero_baseline,
+    zero_padding,
+)
 
 def reduce_peaks(tr, percentile=99, limit_norm=0.9):
     tr = np.asarray(tr)
@@ -95,7 +105,6 @@ def dis_freq_matrix_parallel(acc, dt, fc_hp_array, fc_lp_array, time_res=1024, z
 
     return out
 
-from .process import zero_baseline, cosine_taper, zero_padding, fourier_spectrum, gl, gh, integrate_linear_acceleration
 def fast_dis_freq_matrix(acc, dt, fc_hp_array, fc_lp=30.0, time_res=1024):
     n_freqs = len(fc_hp_array)
     dis_freq_matrix = np.zeros((n_freqs, time_res))
@@ -110,11 +119,11 @@ def fast_dis_freq_matrix(acc, dt, fc_hp_array, fc_lp=30.0, time_res=1024):
     n_org, acc = zero_padding(acc, dt)
     n = 5
     freq, amp_spectrum, fft_result = fourier_spectrum(acc, dt)
-    _gl =  gl(freq, fc_lp, n)
+    lowpass_filter = gh(freq, fc_lp, n)
     
     for i, fc_hp in enumerate(fc_hp_array):
-        _gh = gh(freq, fc_hp, n)
-        fft_filtered = _gl * fft_result * _gh
+        highpass_filter = gl(freq, fc_hp, n)
+        fft_filtered = highpass_filter * fft_result * lowpass_filter
         new_data = np.fft.irfft(fft_filtered)
         new_data = new_data[:n_org]
         _, dis = integrate_linear_acceleration(new_data, dt)
@@ -125,9 +134,9 @@ def fast_dis_freq_matrix(acc, dt, fc_hp_array, fc_lp=30.0, time_res=1024):
     
     return dis_freq_matrix
 
-def _one_fc_hp(fc_hp, freq, fft_result, gl_filt, n, n_org, dt, time_array, time_new):
-    gh_filt = gh(freq, fc_hp, n)
-    fft_filtered = gl_filt * fft_result * gh_filt
+def _one_fc_hp(fc_hp, freq, fft_result, lowpass_filter, n, n_org, dt, time_array, time_new):
+    highpass_filter = gl(freq, fc_hp, n)
+    fft_filtered = highpass_filter * fft_result * lowpass_filter
     new_data = np.fft.irfft(fft_filtered)[:n_org]
 
     _, dis = integrate_linear_acceleration(new_data, dt)
@@ -153,10 +162,20 @@ def fast_dis_freq_matrix_threaded(acc, dt, fc_hp_array, fc_lp=30.0, time_res=102
 
     n = 5
     freq, amp_spectrum, fft_result = fourier_spectrum(acc, dt)
-    gl_filt = gl(freq, fc_lp, n)
+    lowpass_filter = gh(freq, fc_lp, n)
 
     def worker(fc_hp):
-        return _one_fc_hp(fc_hp, freq, fft_result, gl_filt, n, n_org, dt, time_array, time_new)
+        return _one_fc_hp(
+            fc_hp,
+            freq,
+            fft_result,
+            lowpass_filter,
+            n,
+            n_org,
+            dt,
+            time_array,
+            time_new,
+        )
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         dis_list = list(ex.map(worker, fc_hp_array))

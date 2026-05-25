@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the associated paper."
+title: "SMR-DP: Automated strong-motion record processing via deep learning"
+type: software
+authors:
+  - family-names: Inocente
+    given-names: Italo
+    orcid: "https://orcid.org/0000-0002-0843-2348"
+  - family-names: Maruyama
+    given-names: Yoshihisa
+    orcid: "https://orcid.org/0000-0001-8320-7207"
+repository-code: "https://github.com/ItaloIF/smr-dp"
+url: "https://github.com/ItaloIF/smr-dp"
+date-released: "2026-05-21"
+version: "0.1.0"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Inocente
+      given-names: Italo
+      orcid: "https://orcid.org/0000-0002-0843-2348"
+    - family-names: Maruyama
+      given-names: Yoshihisa
+      orcid: "https://orcid.org/0000-0001-8320-7207"
+  title: "Automated Strong-Motion Record Processing via Deep Learning-Based Simultaneous P-Wave Identification and High-Pass Corner-Frequency Selection"
+  journal: "The Seismic Record"
+  volume: 6
+  issue: 2
+  start: 219
+  end: 229
+  year: 2026
+  doi: "10.1785/0320260007"
+references:
+  - type: data
+    authors:
+      - family-names: Inocente
+        given-names: Italo
+        orcid: "https://orcid.org/0000-0002-0843-2348"
+    data-type: CSV
+    database: Zenodo
+    title: "Reference tP and fcHP labels with earthquake-level splits (K-NET/KiK-net)"
+    publisher:
+      name: Zenodo
+    url: "https://zenodo.org/records/18396601"
+    year: 2026
+    doi: "10.5281/zenodo.18396601"
